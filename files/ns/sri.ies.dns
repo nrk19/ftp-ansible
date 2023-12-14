@@ -1,0 +1,21 @@
+; 
+; zone: sri.ies
+; 
+
+$TTL	86400
+@	IN	SOA	ns.sri.ies. admin.sri.ies. (
+			      1		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			  7200 )	; Negative Cache TTL
+;
+
+; RESOLVE RECORDS (RR)
+; name servers (NS)
+@			IN	NS	ns.sri.ies.
+
+; host addresses (A)
+ns	    IN	A	192.168.57.10
+mirror	IN	A	192.168.57.20
+ftp	    IN	A	192.168.57.30

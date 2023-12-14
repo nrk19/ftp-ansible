@@ -1,0 +1,9 @@
+zone "sri.ies" {
+	type master;
+	file "/var/lib/bind/sri.ies.dns";
+};
+
+zone "57.168.192.in-addr.arpa" {
+	type master;
+	file "/var/lib/bind/sri.ies.rev";
+};

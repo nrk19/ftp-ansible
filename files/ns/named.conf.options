@@ -1,0 +1,27 @@
+acl trusted {
+
+	127.0.0.0/8;
+	192.168.57.0/24;
+};
+
+acl listen-addresses {
+	192.168.57.10;
+	127.0.0.1;
+};
+
+options {
+	directory "/var/cache/bind";
+
+	forwarders {
+	 	1.1.1.1;
+	 };
+	
+	allow-transfer { none;};
+	
+	listen-on port 53 { listen-addresses; };
+	
+	recursion yes;
+	allow-recursion { trusted; }; 
+
+	dnssec-validation yes;
+};

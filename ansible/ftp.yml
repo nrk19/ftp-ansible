@@ -50,6 +50,11 @@
         enabled: yes
         daemon_reload: yes
 
+    - name: Copy resolv.conf
+      copy:
+        src: ../files/resolv.conf
+        dest: /etc/
+
     - name: Create local users charles
       user:
         name: charles
