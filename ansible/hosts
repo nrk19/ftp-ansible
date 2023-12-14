@@ -1,0 +1,3 @@
+[servers]
+ns-server  ansible_host=192.168.57.10
+ftp-server ansible_host=192.168.57.20

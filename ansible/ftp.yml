@@ -1,0 +1,61 @@
+- name: Configure FTP Server
+  hosts: ftp-server
+  become: True
+  tasks:
+    - name: Install vsftpd
+      apt: name=vsftpd update_cache=yes
+
+    - name: Create vsftpd config dir
+      file:
+        path: /etc/vsftpd
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Copy configuration files
+      ansible.builtin.copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+      loop:
+        - { src: ../files/ftp/ftp.conf, dest: /etc/vsftpd/ }
+        - { src: ../files/ftp/mirror.conf, dest: /etc/vsftpd/ }
+        - { src: ../files/ftp/vsftpd.chroot_list, dest: /etc/vsftpd/ }
+        - { src: ../files/ftp/.message, dest: /srv/ftp/ }
+        - { src: ../files/ftp/ssl/ssl-cert-priv.key, dest: /etc/ssl/private/ }
+        - { src: ../files/ftp/ssl/ssl-cert-pub.pem, dest: /etc/ssl/certs/ }
+        - { src: ../files/ftp/ssl/ssl-cert-pub.pem, dest: /etc/ssl/certs/ }
+        - { src: ../files/ftp/systemd/vsftpd-mirror.service, dest: /etc/systemd/system/ }
+        - { src: ../files/ftp/systemd/vsftpd-ftp.service, dest: /etc/systemd/system/ }
+
+    - name: Disable vsftpd default server
+      service:
+        name: vsftpd
+        state: stopped
+        enabled: no
+
+    - name: Start FTP server (for local users)
+      service:
+        name: vsftpd-ftp
+        state: started
+        enabled: yes
+        daemon_reload: yes
+
+    - name: Start anonymous FTP server
+      service:
+        name: vsftpd-mirror
+        state: started
+        enabled: yes
+        daemon_reload: yes
+
+    - name: Create local users charles
+      user:
+        name: charles
+        password: "{{ '1234' | password_hash('sha512', 'saltcharles') }}"
+
+    - name: Create local users laura
+      user:
+        name: laura
+        password: "{{ '1234' | password_hash('sha512', 'saltlaura') }}"
