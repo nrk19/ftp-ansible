@@ -26,7 +26,6 @@
         - { src: ../files/ftp/.message, dest: /srv/ftp/ }
         - { src: ../files/ftp/ssl/ssl-cert-priv.key, dest: /etc/ssl/private/ }
         - { src: ../files/ftp/ssl/ssl-cert-pub.pem, dest: /etc/ssl/certs/ }
-        - { src: ../files/ftp/ssl/ssl-cert-pub.pem, dest: /etc/ssl/certs/ }
         - { src: ../files/ftp/systemd/vsftpd-mirror.service, dest: /etc/systemd/system/ }
         - { src: ../files/ftp/systemd/vsftpd-ftp.service, dest: /etc/systemd/system/ }
 
@@ -48,19 +47,18 @@
         name: vsftpd-mirror
         state: started
         enabled: yes
-        daemon_reload: yes
 
     - name: Copy resolv.conf
       copy:
         src: ../files/resolv.conf
         dest: /etc/
 
-    - name: Create local users charles
+    - name: Create local user charles
       user:
         name: charles
         password: "{{ '1234' | password_hash('sha512', 'saltcharles') }}"
 
-    - name: Create local users laura
+    - name: Create local user laura
       user:
         name: laura
         password: "{{ '1234' | password_hash('sha512', 'saltlaura') }}"
