@@ -13,8 +13,8 @@
         path: /etc/vsftpd
         state: directory
         owner: root
-        group: root
-        mode: 0755
+        group: ftp
+        mode: 0750
 
     - name: Generate SSL Private Key
       openssl_privatekey:
@@ -73,7 +73,7 @@
     - name: Copy resolv.conf
       copy:
         src: ../files/resolv.conf
-        dest: /etc/
+        dest: /etc/resolv.conf
 
     - name: Create local user charles
       user:
