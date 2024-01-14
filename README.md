@@ -19,7 +19,7 @@ Network structure:
     ```bash
     make
     ```
-- Without using make: `
+- Without using make: 
     ```bash
     vagrant up
     ansible playbook ansible/site.yml
