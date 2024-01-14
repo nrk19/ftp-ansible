@@ -11,6 +11,7 @@ Without make: `vagrant up; ansible playbook ansible/site.yml`
 
 The FTP server will have two different ftp servers running on it, so the systemd service associated with the 
 default vsftpd server needs to be disabled. We will create two new services associated with one ftp server each:
+> [!NOTE]
 > The default vsftpd service may be used as a template. To obtain it: `systemd cat vsftpd`. 
 
 ``` systemd
