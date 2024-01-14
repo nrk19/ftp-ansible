@@ -6,25 +6,24 @@ Deployment of a server with two FTP server running on it, and another server tha
 > The ftp machine will have two network interfaces at the network 192.168.57.0/24 
 
 Network structure:
-|----------------|---------------|
+
 |     Server     |      IP       |
 |----------------|---------------|
 | ns.sri.ies     | 192.168.57.10 |
-| mirror.sri.ies | 192.168.57.10 |
-| ftp.sri.ies    | 192.168.57.10 |
-|----------------|---------------|
+| mirror.sri.ies | 192.168.57.20 |
+| ftp.sri.ies    | 192.168.57.30 |
 
 ## Deploy
 
-Using make: `make`
-Without using make: `vagrant up; ansible playbook ansible/site.yml`
+- Using make: `make`
+- Without using make: `vagrant up; ansible playbook ansible/site.yml`
 
 ## Configuration
 
 ### Provisioning
 The provisioning will be done using ansible, so we will need to create a ssh key pair and add 
-the public key to the file `.ssh/authorized_keys` of both servers and add the location of the private key
-to [ansible.cfg](ansible.cfg) file.
+the public key to the file `.ssh/authorized_keys` of both servers. Also we will need to add 
+the location of the private key to [ansible.cfg](ansible.cfg) file.
 
 ### Previous configuration
 Since will have two different ftp servers running on the machine, so the systemd service associated with the 
@@ -50,9 +49,11 @@ them at `/etc/systemd/system/` and then enable both services.
     - `ssl_enable` enabled ssl encryption connection (local users must use it)
     - `rsa_cert_file` location of the public ssl key
     - `rsa_private_key_file` location of the private ssl key
+
 - ftp directives: 
     - `chroot_list_file` file that contents a list of user that will be chrooted [vsftpd.chroot_list](files/ftp/vsftpd.chroot_list)
     - `allow_writeable_chroot` enabled so chrooted user will be able to write in their home directory
+
 - mirror directives: 
     - `allow_anon_ssl` enabled to permit anonymous encrypted connections
     - will be mostly the same but disabling local user connections, and of course no jailed's users list
@@ -80,3 +81,21 @@ Key pair generation at: [ansible/ftp.yml](ansible/ftp.yml)
     organization_name: "IES Zaidin Vergeles"
     email_address: "jcorgue951@ieszaidinvergeles.org"
 ```
+
+## Testing
+
+- Anonymous connections:
+> Connection success
+![image not found](screenshots/mirror-success.png)
+> Deny local users connections
+![image not found](screenshots/mirror-deny-local.png)
+- Anonymos encrypted connections:
+> Key exchange
+![image not found](screenshots/mirror-ssl-key-exchange.png)
+- Local connections:
+> Deny non SSL connections
+![image not found](screenshots/local-deny-no-ssl.png)
+> Key exchange
+![image not found](screenshots/local-ssl-key-exchange.png)
+> Connection success
+![image not found](screenshots/local-success.png)
