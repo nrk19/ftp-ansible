@@ -15,8 +15,15 @@ Network structure:
 
 ## Deploy
 
-- Using make: `make`
-- Without using make: `vagrant up; ansible playbook ansible/site.yml`
+- Using make: 
+    ```bash
+    make
+    ```
+- Without using make: `
+    ```bash
+    vagrant up
+    ansible playbook ansible/site.yml
+    ```
 
 ## Configuration
 
