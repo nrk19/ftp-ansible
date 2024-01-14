@@ -44,7 +44,7 @@ them at `/etc/systemd/system/` and then enable both services.
 ### Directives 
 - common directives:
     - `listen`: been set to yes to run the server on standlone mode
-    - `listen_address` been set to 192.168.57.20 (network iface corresponding to mirror server)
+    - `listen_address` been set to 192.168.57.20 and 192.168.57.30 (mirror and local respectively) 
     - `listen_ipv6` disabled since it conflicts with `listen`
     - `no_anon_password` anon connections won't be prompted for a password
     - `anonymous_enable` disabled anonymous connections (enabled on mirror)
