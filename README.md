@@ -7,11 +7,11 @@ Deployment of a server with two FTP server running on it, and another server tha
 
 Network structure:
 
-|     Server     |      IP       |
-|----------------|---------------|
-| ns.sri.ies     | 192.168.57.10 |
-| mirror.sri.ies | 192.168.57.20 |
-| ftp.sri.ies    | 192.168.57.30 |
+|     Server     |  Service  |      IP       |
+|----------------|-----------| --------------|
+| ns.sri.ies     |   named   | 192.168.57.10 |
+| mirror.sri.ies |    ftp    | 192.168.57.20 |
+| ftp.sri.ies    |    ftp    | 192.168.57.30 |
 
 ## Deploy
 
@@ -84,18 +84,4 @@ Key pair generation at: [ansible/ftp.yml](ansible/ftp.yml)
 
 ## Testing
 
-- Anonymous connections:
-> Connection success
-![image not found](screenshots/mirror-success.png)
-> Deny local users connections
-![image not found](screenshots/mirror-deny-local.png)
-- Anonymos encrypted connections:
-> Key exchange
-![image not found](screenshots/mirror-ssl-key-exchange.png)
-- Local connections:
-> Deny non SSL connections
-![image not found](screenshots/local-deny-no-ssl.png)
-> Key exchange
-![image not found](screenshots/local-ssl-key-exchange.png)
-> Connection success
-![image not found](screenshots/local-success.png)
+At the folder [screenshots](screenshots) you can find some captures of the server functionality.
