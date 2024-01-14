@@ -33,13 +33,13 @@ the public key to the file `.ssh/authorized_keys` of both servers. Also we will 
 the location of the private key to [ansible.cfg](ansible.cfg) file.
 
 ### Previous configuration
-Since will have two different ftp servers running on the machine, so the systemd service associated with the 
+Since will have two different ftp servers running on the machine, the systemd service associated with the 
 default vsftpd server needs to be disabled. We will create two new 
 [services](files/ftp/systemd/vsftpd-ftp.service) associated with one ftp server each, 
 basically we will create two copies of the default vsftpd service with small modifications, place both of 
 them at `/etc/systemd/system/` and then enable both services.
 > [!NOTE]
-> The default vsftpd service may be used as a template. To obtain it: `systemd cat vsftpd`. 
+> The default vsftpd service may be used as a template. To obtain it: `systemctl cat vsftpd`. 
 
 ### Directives 
 - common directives:
@@ -70,7 +70,7 @@ To encrypt all the data transferations between the server and the client we will
 For this porpouse we will generate a pair of keys in the machine using the `openssl` ansible module.
 
 > If we wouldn't use SSL encryption, all the data will be sent as plain text, so anyone sniffing the network
-> may be abled to see what's being transfer and private data may be exposed
+> may be abled to see what's being transfer, and private data may be exposed
 
 Key pair generation at: [ansible/ftp.yml](ansible/ftp.yml)
 ```yaml
@@ -91,4 +91,4 @@ Key pair generation at: [ansible/ftp.yml](ansible/ftp.yml)
 
 ## Testing
 
-At the folder [screenshots](screenshots) you can find some captures of the server functionality.
+At [screenshots](screenshots) you can find some captures of the server functionality.
